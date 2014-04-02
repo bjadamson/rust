@@ -367,7 +367,7 @@ fn check_main_fn_ty(ccx: &CrateCtxt,
             }
             let se_ty = ty::mk_bare_fn(tcx, ty::BareFnTy {
                 purity: ast::ImpureFn,
-                abis: abi::AbiSet::Rust(),
+                abi: abi::Rust,
                 sig: ty::FnSig {
                     binder_id: main_id,
                     inputs: Vec::new(),
@@ -413,7 +413,7 @@ fn check_start_fn_ty(ccx: &CrateCtxt,
 
             let se_ty = ty::mk_bare_fn(tcx, ty::BareFnTy {
                 purity: ast::ImpureFn,
-                abis: abi::AbiSet::Rust(),
+                abi: abi::Rust,
                 sig: ty::FnSig {
                     binder_id: start_id,
                     inputs: vec!(
