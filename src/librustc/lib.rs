@@ -148,24 +148,29 @@ pub fn version(argv0: &str) {
 }
 
 pub fn usage(argv0: &str) {
-    let message = format!("Usage: {} [OPTIONS] INPUT", argv0);
-    println!("{}\n\
-Additional help:
-    -C help             Print codegen options
-    -W help             Print 'lint' options and default settings
-    -Z help             Print internal options for debugging rustc\n",
-              getopts::usage(message, d::optgroups().as_slice()));
+    let parsed_options;
+    {
+        let message = format!("Usage: {} [OPTIONS] INPUT", argv0);
+        parsed_options = getopts::usage(message, d::optgroups().as_slice());
+    }
+    println!("{}\n", parsed_options);
+    println!("Additional help:");
+    println!("    -C help             Print codegen options");
+    println!("    -W help             Print 'lint' options and default settings");
+    println!("    -Z help             Print internal options for debugging rustc\n");
 }
 
 pub fn describe_warnings() {
-    println!("
-Available lint options:
-    -W <foo>           Warn about <foo>
-    -A <foo>           Allow <foo>
-    -D <foo>           Deny <foo>
-    -F <foo>           Forbid <foo> (deny, and deny all overrides)
-");
+    println!("Available lint options:");
+    println!("    -W <foo>           Warn about <foo>");
+    println!("    -A <foo>           Allow <foo>");
+    println!("    -D <foo>           Deny <foo>");
+    println!("    -F <foo>           Forbid <foo> (deny, and deny all overrides)");
 
+    describe_lints();
+}
+
+fn describe_lints() {
     let lint_dict = lint::get_lint_dict();
     let mut lint_dict = lint_dict.move_iter()
                                  .map(|(k, v)| (v, k))
